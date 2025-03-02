@@ -28,5 +28,10 @@ var (
 			Description: "List all namespaces in the cluster",
 			Handler:     ListNamespaces,
 		},
+		{
+			Name:        "delete_pod",
+			Description: "Delete a pod in the specified namespace",
+			Handler:     DeletePod,
+		},
 	}
 )

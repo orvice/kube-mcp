@@ -27,3 +27,21 @@ func ListPods(arg ListPodsArg) (*mcp_golang.ToolResponse, error) {
 		Content: []*mcp_golang.Content{content},
 	}, nil
 }
+
+type DeletePodArg struct {
+	Namespace string
+	PodName   string
+}
+
+func DeletePod(arg DeletePodArg) (*mcp_golang.ToolResponse, error) {
+	err := clientset.CoreV1().Pods(arg.Namespace).Delete(context.TODO(), arg.PodName, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, err
+	}
+	
+	text := fmt.Sprintf("Pod %s in namespace %s has been deleted\n", arg.PodName, arg.Namespace)
+	content := mcp_golang.NewTextContent(text)
+	return &mcp_golang.ToolResponse{
+		Content: []*mcp_golang.Content{content},
+	}, nil
+}

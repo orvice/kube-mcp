@@ -10,7 +10,7 @@ func main() {
 	done := make(chan struct{})
 	kube.InitClient()
 	var err error
-	server := mcp_golang.NewServer(stdio.NewStdioServerTransport())
+	server := mcp_golang.NewServer(stdio.NewStdioServerTransport(), mcp_golang.WithName("kubemcp"))
 
 	// Register tools
 	for _, v := range kube.ToolList {
