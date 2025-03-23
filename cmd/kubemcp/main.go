@@ -1,31 +1,31 @@
 package main
 
 import (
-	mcp_golang "github.com/metoro-io/mcp-golang"
-	"github.com/metoro-io/mcp-golang/transport/stdio"
+	"fmt"
+
+	"github.com/mark3labs/mcp-go/server"
 	"github.com/orvice/kube-mcp/internal/kube"
 )
 
+const (
+	version = "0.0.1"
+)
+
 func main() {
-	done := make(chan struct{})
+	// Create MCP server
+	s := server.NewMCPServer(
+		"KubeMCP",
+		version,
+	)
+
 	kube.InitClient()
-	var err error
-	server := mcp_golang.NewServer(stdio.NewStdioServerTransport(), mcp_golang.WithName("kubemcp"))
+	for _, tool := range kube.ToolList {
+		s.AddTool(tool.Tool, tool.Handler)
 
-	// Register tools
-	for _, v := range kube.ToolList {
-		err = server.RegisterTool(v.Name, v.Description, v.Handler)
-		if err != nil {
-			panic(err)
-		}
 	}
 
-	// Start the server after registering all resources and tools
-	err = server.Serve()
-	if err != nil {
-		panic(err)
+	// Start the stdio server
+	if err := server.ServeStdio(s); err != nil {
+		fmt.Printf("Server error: %v\n", err)
 	}
-
-	<-done
-
 }
