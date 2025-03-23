@@ -44,5 +44,14 @@ var (
 		),
 			Handler: Ingresses,
 		},
+		{Tool: mcp.NewTool("k8s_list_statefulsets",
+			mcp.WithDescription("List K8s StatefulSets"),
+			mcp.WithString("namespace",
+				mcp.Required(),
+				mcp.Description("namespace"),
+			),
+		),
+			Handler: StatefulSets,
+		},
 	}
 )
