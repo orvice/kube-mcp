@@ -35,5 +35,14 @@ var (
 		),
 			Handler: Namespaces,
 		},
+		{Tool: mcp.NewTool("k8s_list_ingresses",
+			mcp.WithDescription("List K8s Ingresses"),
+			mcp.WithString("namespace",
+				mcp.Required(),
+				mcp.Description("namespace"),
+			),
+		),
+			Handler: Ingresses,
+		},
 	}
 )
