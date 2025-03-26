@@ -22,3 +22,21 @@ The following tool commands are supported by kube-mcp:
 ```bash
 go install github.com/orvice/kube-mcp/cmd/kubemcp@latest
 ```
+
+## Usage
+
+```json
+{
+  "mcpServers": {
+    "kube-mcp": {
+      "command": "kubemcp",
+      "args": [],
+      "env": {
+        "KUBECONFIG": "~/.kube/.kubeconfig"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
